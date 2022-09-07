@@ -67,5 +67,7 @@ print("Imprimir cola = ",a)
 
 print("obtener primer elemento con dos digitos = ",a.obtenerPrimerElemento(lambda a: len(str(a)) == 2))
 print("Imprimir cola = ",a)
+print("obtener primer elemento con tres digitos = ",a.obtenerPrimerElemento(lambda a: len(str(a)) == 3))
+print("Imprimir cola = ",a)
 print("obtener primer elemento 13 = ",a.obtenerPrimerElemento(lambda a: a == 13))
 print("Imprimir cola = ",a)
