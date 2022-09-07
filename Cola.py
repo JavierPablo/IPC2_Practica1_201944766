@@ -52,22 +52,3 @@ class Cola(Generic[R]):
             if predicado(temporal.elemeento): return temporal.elemeento
             temporal = temporal.siguiente
         return None
-
-
-a = Cola[int]()
-for x in range(15):
-    a.insertar(x)
-print(a)
-print("a cada elemento multiplicarle 0 e imprimir consecutivamente")
-a.realizarConCadaElemento(lambda a: print(a*0))
-print("Imprimir cola = ",a)
-print("a cada elemento suamrle 100 e imprimir consecutivamente")
-a.realizarConCadaElemento(lambda a: print(a+100))
-print("Imprimir cola = ",a)
-
-print("obtener primer elemento con dos digitos = ",a.obtenerPrimerElemento(lambda a: len(str(a)) == 2))
-print("Imprimir cola = ",a)
-print("obtener primer elemento con tres digitos = ",a.obtenerPrimerElemento(lambda a: len(str(a)) == 3))
-print("Imprimir cola = ",a)
-print("obtener primer elemento 13 = ",a.obtenerPrimerElemento(lambda a: a == 13))
-print("Imprimir cola = ",a)
