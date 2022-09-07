@@ -40,8 +40,15 @@ class Cola(Generic[R]):
             if temporal is not None: strRepr +=" -> "
         return strRepr
 
-    def realizarACadaElemento(self,consumidor:Callable[[R],None]) -> None:
-        pass
+    def realizarConCadaElemento(self,consumidor:Callable[[R],None]) -> None:
+        temporal = self.inicio
+        while temporal is not None: 
+            consumidor(temporal.elemeento)
+            temporal = temporal.siguiente
     
     def obtenerPrimerElemento(self,predicado:Callable[[R],bool]) -> R:
-        pass
+        temporal = self.inicio
+        while temporal is not None: 
+            if predicado(temporal.elemeento): return temporal.elemeento
+            temporal = temporal.siguiente
+        return None
