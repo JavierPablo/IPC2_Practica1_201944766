@@ -1,4 +1,4 @@
-from typing import Generic, TypeVar
+from typing import Callable, Generic, TypeVar
 
 
 T = TypeVar("T")
@@ -39,3 +39,9 @@ class Cola(Generic[R]):
             temporal = temporal.siguiente
             if temporal is not None: strRepr +=" -> "
         return strRepr
+
+    def realizarACadaElemento(self,consumidor:Callable[[R],None]) -> None:
+        pass
+    
+    def obtenerPrimerElemento(self,predicado:Callable[[R],bool]) -> R:
+        pass
