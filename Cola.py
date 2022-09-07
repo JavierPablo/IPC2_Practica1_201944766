@@ -30,3 +30,12 @@ class Cola(Generic[R]):
         else:
             self.inicio = temporal.siguiente
         return temporal.elemeento
+    
+    def __str__(self) -> str:
+        strRepr = ""
+        temporal = self.inicio
+        while temporal is not None: 
+            strRepr += str(temporal.elemeento)
+            temporal = temporal.siguiente
+            if temporal is not None: strRepr +=" -> "
+        return strRepr
