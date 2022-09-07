@@ -20,4 +20,13 @@ class Cola(Generic[R]):
         self.final.siguiente = Nodo(elemento)
         self.final = self.final.siguiente
     def desencolar(self) -> R:
+        temporal = self.inicio
+        if temporal is None: return None
+        if temporal is self.final: 
+            self.inicio = None
+            self.final = None
+        else:
+            self.inicio = temporal.siguiente
+        return temporal.elemeento
+        
         pass
