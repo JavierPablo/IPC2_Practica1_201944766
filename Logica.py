@@ -42,6 +42,9 @@ if OrdenDeHotDog.INGREDIENTES is None:
 class AdministradorDeOrden(Cola[OrdenDeHotDog]):
     def __init__(self) -> None:
         super().__init__()
-        
+    def realizarOrden(self,cliente:Cliente, ingredientes:Cola[int], cantidadDeHotdogs:int)-> None:
+        pass
+    def entregarOrden(self)-> None:
+        pass
 
 
