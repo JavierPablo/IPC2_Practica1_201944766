@@ -47,7 +47,7 @@ class AdministradorDeOrden:
     def __init__(self) -> None:
         self.cola = Cola[OrdenDeHotDog]()
 
-    def realizarOrden(self,cliente:Cliente, ingredientes:Cola[int], cantidadDeHotdogs:int)-> None:
+    def agregarOrden(self,cliente:Cliente, ingredientes:Cola[int], cantidadDeHotdogs:int)-> None:
         tiempoExtra:int = 0
         def consumidor(orden:OrdenDeHotDog):
             nonlocal tiempoExtra
@@ -55,11 +55,27 @@ class AdministradorDeOrden:
         self.cola.realizarConCadaElemento(consumidor)
         nuevaOrden = OrdenDeHotDog(cliente,cantidadDeHotdogs,ingredientes,tiempoExtra)
         self.cola.insertar(nuevaOrden)
-        self.__generarImgEstadoCola()
+
+    def quitarOrden(self)-> None:
+        self.cola.desencolar()
+    def getGraphvizRepresentacion(self):
+        pass
+
+
+class InterfazDePrograma():
+    def __init__(self,direccionCarpetaDestino:str) -> None:
+        self.administradorDeOrden = AdministradorDeOrden()
+        self.direccionCarpetaDestino = direccionCarpetaDestino
+        
+    def realizarOrden(self,cliente:Cliente, ingredientes:Cola[int], cantidadDeHotdogs:int)-> None:
+        self.administradorDeOrden.agregarOrden(cliente,ingredientes,cantidadDeHotdogs)
+        self.__generarImagenDeGraphviz()
 
     def entregarOrden(self)-> None:
-        self.cola.desencolar()
-        self.__generarImgEstadoCola()
-
-    def __generarImgEstadoCola(self):
-        print(self.cola)
+        self.administradorDeOrden.quitarOrden()
+        self.__generarImagenDeGraphviz()
+    
+    def __generarImagenDeGraphviz(self):
+        pass
+    def getIngredientesDeHotDog(self) -> Cola[Ingrediente]:
+        return OrdenDeHotDog.INGREDIENTES
