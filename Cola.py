@@ -52,3 +52,12 @@ class Cola(Generic[R]):
             if predicado(temporal.elemeento): return temporal.elemeento
             temporal = temporal.siguiente
         return None
+    
+    def  __getitem__(self,index:int):
+        if index < 0 :return None
+        actual = self.inicio
+        if  actual is None: return None
+        for x in range(index):
+            actual = actual.siguiente
+            if  actual is None: return None
+        return actual.elemeento
