@@ -19,14 +19,18 @@ class OrdenDeHotDog:
         self.cantidadDeHotDogs=cantidadDeHotDogs
         self.ingredientes=ingredientes
         self.tiempoExtra=tiempoExtra
-        self.tiempoPropio = self.__calcularTiempoPropio()
-        OrdenDeHotDog.INGREDIENTES.realizarConCadaElemento(lambda a:print(a))
+        self.tiempoPropio = 0
+        self.__calcularTiempoPropio()
         
+    def __incrementarTiempoPropio(self,num:int):
+        self.tiempoPropio+=num
     def __calcularTiempoPropio(self):
-        def consumidorContadorDeTiempo(num:int):
-            self.tiempoPropio+=OrdenDeHotDog.INGREDIENTES[num].tiempoDeCoccion
-        self.ingredientes.realizarConCadaElemento(consumidorContadorDeTiempo)
-        
+        self.ingredientes.realizarConCadaElemento(lambda a:self.__incrementarTiempoPropio(OrdenDeHotDog.INGREDIENTES[a].tiempoDeCoccion))
+    def tiempoTotal(self)-> int:
+        return self.tiempoExtra + self.tiempoPropio
+    def __str__(self) -> str:
+        return f"{self.cliente.nombre}, cantidad = {self.cantidadDeHotDogs}, tiempoTotal = {self.tiempoTotal()} || TE = {self.tiempoExtra} TP = {self.tiempoPropio}"
+
     def inicializarINGREDIENTES():
         OrdenDeHotDog.INGREDIENTES = Cola()
         OrdenDeHotDog.INGREDIENTES.insertar(Ingrediente("Chorizo",3))
@@ -39,14 +43,23 @@ if OrdenDeHotDog.INGREDIENTES is None:
 
 
 
-class AdministradorDeOrden(Cola[OrdenDeHotDog]):
+class AdministradorDeOrden:
     def __init__(self) -> None:
-        super().__init__()
+        self.cola = Cola[OrdenDeHotDog]()
+
     def realizarOrden(self,cliente:Cliente, ingredientes:Cola[int], cantidadDeHotdogs:int)-> None:
-        pass
+        tiempoExtra:int = 0
+        def consumidor(orden:OrdenDeHotDog):
+            nonlocal tiempoExtra
+            tiempoExtra+=orden.tiempoTotal()
+        self.cola.realizarConCadaElemento(consumidor)
+        nuevaOrden = OrdenDeHotDog(cliente,cantidadDeHotdogs,ingredientes,tiempoExtra)
+        self.cola.insertar(nuevaOrden)
+        self.__generarImgEstadoCola()
+
     def entregarOrden(self)-> None:
-        pass
+        self.cola.desencolar()
+        self.__generarImgEstadoCola()
+
     def __generarImgEstadoCola(self):
-        pass
-
-
+        print(self.cola)
