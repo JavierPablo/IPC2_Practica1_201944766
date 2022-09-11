@@ -26,6 +26,7 @@ class OrdenDeHotDog:
         self.tiempoPropio+=num
     def __calcularTiempoPropio(self):
         self.ingredientes.realizarConCadaElemento(lambda a:self.__incrementarTiempoPropio(OrdenDeHotDog.INGREDIENTES[a].tiempoDeCoccion))
+        self.tiempoPropio *=self.cantidadDeHotDogs
     def tiempoTotal(self)-> int:
         return self.tiempoExtra + self.tiempoPropio
     def __str__(self) -> str:
@@ -51,7 +52,7 @@ class AdministradorDeOrden:
         tiempoExtra:int = 0
         def consumidor(orden:OrdenDeHotDog):
             nonlocal tiempoExtra
-            tiempoExtra+=orden.tiempoTotal()
+            tiempoExtra+=orden.tiempoPropio
         self.cola.realizarConCadaElemento(consumidor)
         nuevaOrden = OrdenDeHotDog(cliente,cantidadDeHotdogs,ingredientes,tiempoExtra)
         self.cola.insertar(nuevaOrden)
@@ -59,14 +60,15 @@ class AdministradorDeOrden:
     def quitarOrden(self)-> None:
         self.cola.desencolar()
     def getGraphvizRepresentacion(self):
-        pass
+        print(self.cola)
 
 
 class InterfazDePrograma():
-    def __init__(self,direccionCarpetaDestino:str) -> None:
+    def __init__(self) -> None:
         self.administradorDeOrden = AdministradorDeOrden()
-        self.direccionCarpetaDestino = direccionCarpetaDestino
-        
+        self.direccionCarpetaDestino = "Graficas"
+        self.graficasCounter = 0
+
     def realizarOrden(self,cliente:Cliente, ingredientes:Cola[int], cantidadDeHotdogs:int)-> None:
         self.administradorDeOrden.agregarOrden(cliente,ingredientes,cantidadDeHotdogs)
         self.__generarImagenDeGraphviz()
@@ -76,6 +78,7 @@ class InterfazDePrograma():
         self.__generarImagenDeGraphviz()
     
     def __generarImagenDeGraphviz(self):
+        self.administradorDeOrden.getGraphvizRepresentacion()
         pass
     def getIngredientesDeHotDog(self) -> Cola[Ingrediente]:
         return OrdenDeHotDog.INGREDIENTES
