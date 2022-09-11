@@ -46,5 +46,7 @@ class AdministradorDeOrden(Cola[OrdenDeHotDog]):
         pass
     def entregarOrden(self)-> None:
         pass
+    def __generarImgEstadoCola(self):
+        pass
 
 
