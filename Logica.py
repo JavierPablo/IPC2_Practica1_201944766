@@ -21,9 +21,12 @@ class OrdenDeHotDog:
         self.tiempoExtra=tiempoExtra
         self.tiempoPropio = self.__calcularTiempoPropio()
         OrdenDeHotDog.INGREDIENTES.realizarConCadaElemento(lambda a:print(a))
-    
+        
     def __calcularTiempoPropio(self):
-        pass
+        def consumidorContadorDeTiempo(num:int):
+            self.tiempoPropio+=OrdenDeHotDog.INGREDIENTES[num].tiempoDeCoccion
+        self.ingredientes.realizarConCadaElemento(consumidorContadorDeTiempo)
+        
     def inicializarINGREDIENTES():
         OrdenDeHotDog.INGREDIENTES = Cola()
         OrdenDeHotDog.INGREDIENTES.insertar(Ingrediente("Chorizo",3))
@@ -39,5 +42,6 @@ if OrdenDeHotDog.INGREDIENTES is None:
 class AdministradorDeOrden(Cola[OrdenDeHotDog]):
     def __init__(self) -> None:
         super().__init__()
+        
 
 
